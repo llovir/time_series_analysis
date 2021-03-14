@@ -286,7 +286,7 @@ razlika
 library(forecast)
 par(mfrow=c(1,1))
 plot(forecast(modelfix,48), main="Prediction of model", xlab="Year", ylab="Number of passengers")
-plot(forecast(modelfix,48),xlim=c(1949,1960),type="l",main="Prediction od model",ylab="Number of passengers",xlab="Year") 
+plot(forecast(modelfix,48),xlim=c(1949,1960),type="l",main="Prediction of model",ylab="Number of passengers",xlab="Year") 
 pred <- forecast(modelfix,h = 48)
 str(pred)
 
