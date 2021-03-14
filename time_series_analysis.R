@@ -78,13 +78,13 @@ plot(logputnikM,xlab = "Date", ylab = "log (Number of passengers)", col = "darkb
 points(logputnikM, col = "red", pch = 16, cex = 0.5)
 acf(logputnikM, main="Autocorrelation  function", xlab="Lag",lag.max = 72)
 acf(logputnikM, lag.max = 72)
-
+#Differencing
 DlogputnikM <- diff(logputnikM)
 plot(DlogputnikM , xlab = "Date", ylab = "log- Number of passengers", col = "darkblue")
 points(DlogputnikM, col = "red", pch = 16, cex = 0.5)
 acf(DlogputnikM, main="Autocorrelation  function", xlab="Lag",lag.max = 72)
 adf.test(DlogputnikM)
-
+#Differencing lag 12
 diff_ss12 <- diff(DlogputnikM,lag=12)
 adf.test(diff_ss12) 
 
@@ -186,8 +186,8 @@ BIC(model$fit)
 coef(model$fit)
 confint(model$fit)
 Box.test(model$fit$residuals, type = "Ljung-Box")
-#nekorelirani
-# procjena varijance= 0.001515:  log likelihood = 148.76,  aic = -291.53
+#uncorrelated
+# var= 0.001515:  log likelihood = 148.76,  aic = -291.53
 # BIC(model$fit)= -284.2695
  
 model0<- sarima(logputnikM, 2,1,1,0,1,1, 12)
@@ -230,7 +230,7 @@ model6<- sarima(logputnikM,1,1,1,0,1,1, 12) ###final model
 confint(model6$fit)
 model6$fit
 BIC(model6$fit)
-Box.test(model6$fit$residuals, type = "Ljung-Box")
+Box.test(model6$fit$residuals, type = "Ljung-Box") #model with best variance, AIC and BIC
 
 model7<- sarima(logputnikM,2,1,0,0,1,1, 12) 
 model7$fit
@@ -260,6 +260,7 @@ par(mfrow=c(1,1))
 hist(reziduali, main='Histogram of residulas ', xlab='Residuals', ylab='Frequence')
 qqnorm(reziduali,xlab="Theoretical quantile",ylab="Quantile of empirical distribution", main="QQ-Plot")
 qqline(reziduali,col="red",lwd=1)
+#test for normality
 shapiro.test(reziduali)
 acf(reziduali,main='Autocorrelation function of residuals', xlab='Lag', ylab='ACRF',lag.max=36)
 Box.test(reziduali, type = "Ljung-Box")
@@ -281,7 +282,6 @@ Box.test(rez, type = "Ljung-Box")
 # Prediction
 razlika <- length(u) - length(v)
 razlika 
-#48 podatka
 
 library(forecast)
 par(mfrow=c(1,1))
